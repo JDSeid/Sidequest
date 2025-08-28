@@ -137,3 +137,23 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+
+# Firebase service account / secret keys
+firebase-key.json
+
+
+# React Native build files
+/android/app/build
+/ios/build
+ios/Pods
+
+# Android local properties
+android/local.properties
+
+# iOS Xcode user data
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+xcuserdata/

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Sidequest",
-    "slug": "Sidequest",
+    "slug": "https://auth.expo.dev/@SideQuest1/Sidequest",  
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

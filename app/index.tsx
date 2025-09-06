@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import LoginScreen from './login';
-import SignupScreen from './signup';
-
-
+import HomeScreen from "./screens/home";
+import LoginScreen from './screens/login';
+import QuestScreen from "./screens/quest";
+import SignupScreen from './screens/signup';
 
 
 
@@ -24,7 +24,12 @@ export default function App() {
         component={SignupScreen}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>
+        <Stack.Screen 
+        name="Home" 
+        component={HomeScreen} 
+        options={{ headerShown: false }}/>
+        <Stack.Screen name="Quest" component={QuestScreen} />
+      </Stack.Navigator>
   );
 }
 

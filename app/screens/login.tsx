@@ -2,8 +2,8 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { auth } from "./firebaseConfig";
-import { styles } from "./styles";
+import { auth } from "../firebaseConfig";
+import { styles } from "../styles";
 
 export function getFriendlyErrorMessage(code: string) {
   switch (code) {
@@ -33,9 +33,12 @@ export default function LoginScreen({ navigation }: any) {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      //This code only runs if the login was successful
       setError('');
-      // TODO: Navigate to your home screen if needed
       alert('Logged in successfully!');
+      //Navigate to home screen
+      navigation.replace("Home");
+      //This code runs if there was an error during login
     } catch (err: any) {
       setError(getFriendlyErrorMessage(err.code));
     }

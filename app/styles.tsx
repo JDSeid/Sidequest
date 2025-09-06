@@ -1,6 +1,14 @@
 // styles.ts
 import { StyleSheet } from 'react-native';
 
+export const dateTimeStyle = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+}
 export const styles = StyleSheet.create({
   container: { 
     flex: 1, 

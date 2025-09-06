@@ -1,21 +1,29 @@
 import { collection, DocumentReference, getDoc, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
-import QuestCard from "../components/QuestCard";
+import { ActivityIndicator, View } from "react-native";
+import QuestListView from "../components/QuestListView";
+import QuestMapView from "../components/QuestMapView"; // new placeholder map component
+import ViewToggle from "../components/ViewToggle";
 import { db } from "../firebaseConfig";
+import { styles } from "../styles";
 
 interface Quest {
   id: string;
   title: string;
   description: string;
-  datetime: any; // Firestore Timestamp
+  datetime: any;
   locationName: string;
-  attendees: string[]; // array of attendee names
+  locationCoordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  attendees: string[];
 }
 
 export default function HomeScreen({ navigation }: any) {
   const [quests, setQuests] = useState<Quest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<"list" | "map">("list");
 
   useEffect(() => {
     const fetchQuests = async () => {
@@ -26,7 +34,6 @@ export default function HomeScreen({ navigation }: any) {
         for (const docSnap of snapshot.docs) {
           const data = docSnap.data();
 
-          // Resolve attendee names
           let attendeeNames: string[] = [];
           if (data.attendees && Array.isArray(data.attendees)) {
             const names = await Promise.all(
@@ -44,6 +51,10 @@ export default function HomeScreen({ navigation }: any) {
             description: data.description,
             datetime: data.datetime,
             locationName: data.locationName,
+            locationCoordinates: {
+              latitude: data.location.latitude,
+              longitude: data.location.longitude,
+            },
             attendees: attendeeNames,
           });
         }
@@ -68,28 +79,16 @@ export default function HomeScreen({ navigation }: any) {
   }
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={quests}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Quest", { questId: item.id })}
-          >
-            <QuestCard
-              title={item.title}
-              description={item.description}
-              datetime={item.datetime}
-              locationName={item.locationName}
-              attendees={item.attendees}
-            />
-          </TouchableOpacity>
-        )}
-      />
+    <View style={{ flex: 1 }}>
+      {/* Toggle between list and map */}
+      {viewMode === "list" ? (
+        <QuestListView quests={quests} navigation={navigation} />
+      ) : (
+        <QuestMapView />
+      )}
+
+      {/* Bottom ViewToggle */}
+      <ViewToggle viewMode={viewMode} setViewMode={setViewMode} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: "#fff" },
-});

@@ -66,10 +66,12 @@ export const questCardStyles = StyleSheet.create({
   attendees: { fontSize: 12, color: "#444", marginTop: 5 },
 });
 
+
+
 export const viewToggleStyles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    height: 85, 
+    height: 85,
     borderTopWidth: 1,
     borderColor: "#ccc",
     backgroundColor: "#fff",
@@ -91,5 +93,12 @@ export const viewToggleStyles = StyleSheet.create({
   },
   activeButtonText: {
     color: "#fff",
+  },
+});
+
+
+export const mapStyles = StyleSheet.create({
+  map: {
+    flex: 1,
   },
 });

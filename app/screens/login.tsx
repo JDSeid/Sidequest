@@ -37,7 +37,11 @@ export default function LoginScreen({ navigation }: any) {
       setError('');
       alert('Logged in successfully!');
       //Navigate to home screen
-      navigation.replace("Home");
+
+      //Unncessary because of auth listener in AppWrapper
+      // navigation.replace("Home");
+
+
       //This code runs if there was an error during login
     } catch (err: any) {
       setError(getFriendlyErrorMessage(err.code));

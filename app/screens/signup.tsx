@@ -8,7 +8,7 @@ import { styles } from "../styles";
 
 
 function getFriendlyErrorMessage(code: string) {
-    console.log(code);
+  console.log(code);
   switch (code) {
     case 'auth/invalid-email':
       return 'Please enter a valid email address.';
@@ -41,7 +41,7 @@ async function addUserToDatabase(user: any, firstName?: string, phoneNumber?: st
       firstName: firstName || "", // default to empty string
       email: user.email || "",
       createdAt: new Date(),
-      phoneNumber: phoneNumber || "", 
+      phoneNumber: phoneNumber || "",
     });
     console.log("User added to Firestore:", user.uid);
   } catch (error) {
@@ -125,72 +125,74 @@ export default function SignupScreen({ navigation }: any) {
       //This code only runs if signup was successful
       setError('');
       alert('Account created successfully!');
-      //Navigate to home screen
-      navigation.replace("Home");
+
+      //Unncessary because of auth listener in AppWrapper
+      // navigation.replace("Home");
+
       //This code runs if there was an error during signup
     } catch (err: any) {
       setError(getFriendlyErrorMessage(err.code));
     }
   };
   return (
-<KeyboardAvoidingView
-  style={{ flex: 1 }}
-  behavior={Platform.OS === "ios" ? "padding" : undefined}
->
-  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}>
-  
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}>
 
-      <TextInput
-        style={styles.input}
-        placeholder="First Name"
-        value={firstName}
-        onChangeText={setFirstName}
-      />
+          <View style={styles.container}>
+            <Text style={styles.title}>Sign Up</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        autoCapitalize="none"
-        value={email}
-        onChangeText={setEmail}
-      />
+            <TextInput
+              style={styles.input}
+              placeholder="First Name"
+              value={firstName}
+              onChangeText={setFirstName}
+            />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              autoCapitalize="none"
+              value={email}
+              onChangeText={setEmail}
+            />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Re-enter Password"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
-    <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        keyboardType="number-pad"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
-        // onSubmitEditing={() => Keyboard.dismiss()} // hides keyboard when user presses "done"
-    />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
 
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+            <TextInput
+              style={styles.input}
+              placeholder="Re-enter Password"
+              secureTextEntry
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Phone Number"
+              keyboardType="number-pad"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+            // onSubmitEditing={() => Keyboard.dismiss()} // hides keyboard when user presses "done"
+            />
 
-      <Button title="Sign Up" onPress={handleSignup} />
+            {error ? <Text style={styles.error}>{error}</Text> : null}
 
-      {/* New Back to Login button */}
-      <Button title="Back to Login" onPress={() => navigation.goBack()} />
-    </View>
-    </ScrollView>
-    </TouchableWithoutFeedback>
+            <Button title="Sign Up" onPress={handleSignup} />
+
+            {/* New Back to Login button */}
+            <Button title="Back to Login" onPress={() => navigation.goBack()} />
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 }

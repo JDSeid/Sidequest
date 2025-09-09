@@ -2,7 +2,7 @@ import { collection, DocumentReference, getDoc, getDocs } from "firebase/firesto
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import QuestListView from "../components/QuestListView";
-import QuestMapView from "../components/QuestMapView"; // new placeholder map component
+import QuestMapView from "../components/QuestMapView";
 import ViewToggle from "../components/ViewToggle";
 import { db } from "../firebaseConfig";
 import { styles } from "../styles";
@@ -80,15 +80,29 @@ export default function HomeScreen({ navigation }: any) {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Toggle between list and map */}
-      {viewMode === "list" ? (
+      {/* List view */}
+      <View
+        style={[
+          styles.listContainer,
+          { display: viewMode === "list" ? "flex" : "none" }
+        ]}
+      >
         <QuestListView quests={quests} navigation={navigation} />
-      ) : (
-        <QuestMapView />
-      )}
+      </View>
 
-      {/* Bottom ViewToggle */}
+      {/* Map view */}
+      <View
+        style={[
+          styles.listContainer, // or another wrapper style if you want
+          { display: viewMode === "map" ? "flex" : "none" }
+        ]}
+      >
+        <QuestMapView quests={quests} navigation={navigation} />
+      </View>
+
+      {/* Bottom toggle */}
       <ViewToggle viewMode={viewMode} setViewMode={setViewMode} />
     </View>
+
   );
 }
